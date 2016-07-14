@@ -28,7 +28,7 @@
 
 _STLP_BEGIN_NAMESPACE
 
-static const string _Nameless("*");
+static const char _Nameless[] = "*";
 
 static inline bool is_C_locale_name (const char* name)
 { return ((name[0] == 'C') && (name[1] == 0)); }
@@ -211,7 +211,7 @@ void _Locale_impl::insert_ctype_facets( const char* &name, char *buf )
         wct  = new ctype_byname<wchar_t>(__lwct);
       }
       _STLP_UNWIND(_STLP_PRIV __release_ctype(__lwct));
-      
+
       _Locale_codecvt *__lwcvt = _STLP_PRIV __acquire_codecvt(name, buf, hint, &__err_code);
       if (__lwcvt) {
         _STLP_TRY {
@@ -496,7 +496,7 @@ void _Locale_impl::insert_monetary_facets(const char* &name, char *buf )
           wpunct  = new moneypunct_byname<wchar_t, false>(__wmon);
         }
         _STLP_UNWIND(_STLP_PRIV __release_monetary(__wmon));
-      
+
         _Locale_monetary *__wimon = _STLP_PRIV __acquire_monetary(name, buf, hint, &__err_code);
         if (!__wimon) {
           delete wpunct;
@@ -781,4 +781,3 @@ _STLP_DECLSPEC locale::id& _STLP_CALL _GetFacetId(const time_put<wchar_t, ostrea
 _STLP_MOVE_TO_STD_NAMESPACE
 
 _STLP_END_NAMESPACE
-

@@ -89,7 +89,7 @@ template <class _Tp>
 struct _StorageType<_Tp*> {
   // Even if we detect a pointer type we use dispatch function to consider if it can be stored as a void*.
   // For instance function pointer might not necessarily be convertible to void*.
-  enum { use_void_ptr = (sizeof(_UseVoidPtrStorageType(__true_type(),
+  enum { use_void_ptr = (sizeof(_STLP_PRIV _UseVoidPtrStorageType(__true_type(),
                                                        __STATIC_CAST(_Tp*, 0))) == sizeof(char*)) };
   enum { use_const_volatile_void_ptr = use_void_ptr };
   typedef typename __select<use_void_ptr,
@@ -100,7 +100,7 @@ struct _StorageType<_Tp*> {
 
 template <class _Tp>
 struct _StorageType<_Tp const*> {
-  enum { use_void_ptr = (sizeof(_UseConstVoidPtrStorageType(__true_type(),
+  enum { use_void_ptr = (sizeof(_STLP_PRIV _UseConstVoidPtrStorageType(__true_type(),
                                                             __STATIC_CAST(const _Tp*, 0))) == sizeof(char*)) };
   enum { use_const_volatile_void_ptr = use_void_ptr };
   typedef typename __select<use_void_ptr,
@@ -113,7 +113,7 @@ struct _StorageType<_Tp const*> {
 
 template <class _Tp>
 struct _StorageType<_Tp volatile*> {
-  enum { use_void_ptr = (sizeof(_UseVolatileVoidPtrStorageType(__true_type(),
+  enum { use_void_ptr = (sizeof(_STLP_PRIV _UseVolatileVoidPtrStorageType(__true_type(),
                                                                __STATIC_CAST(_Tp volatile*, 0))) == sizeof(char*)) };
   enum { use_const_volatile_void_ptr = use_void_ptr };
   typedef typename __select<use_void_ptr,
@@ -126,7 +126,7 @@ struct _StorageType<_Tp volatile*> {
 
 template <class _Tp>
 struct _StorageType<_Tp const volatile*> {
-  enum { use_void_ptr = (sizeof(_UseConstVolatileVoidPtrStorageType(__true_type(),
+  enum { use_void_ptr = (sizeof(_STLP_PRIV _UseConstVolatileVoidPtrStorageType(__true_type(),
                                                                     __STATIC_CAST(_Tp const volatile*, 0))) == sizeof(char*)) };
   enum { use_const_volatile_void_ptr = use_void_ptr };
   typedef typename __select<use_void_ptr,
@@ -306,7 +306,10 @@ struct _IteWrapper {
 
   _IteWrapper(_Iterator &__ite) : _M_ite(__ite) {}
 
-  const_reference operator*() const { return cast_traits::to_storage_type_cref(*_M_ite); }
+  const_reference operator*() const
+  // See http://code.google.com/p/android/issues/detail?id=38630
+  //{ return cast_traits::to_storage_type_cref(*_M_ite); }
+  { return reinterpret_cast<const_reference>(*_M_ite); }
 
   _Self& operator= (_Self const& __rhs) {
     _M_ite = __rhs._M_ite;

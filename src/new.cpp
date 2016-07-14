@@ -30,7 +30,7 @@ const nothrow_t nothrow = {};
 _STLP_END_NAMESPACE
 
 #ifdef _STLP_OPERATORS_NEW_DELETE
-// static _STLP_STD::new_handler _newhandler = 0;
+static _STLP_STD::new_handler __new_handler = 0;
 
 // see libsupc++.a
 extern _STLP_STD::new_handler __new_handler;
@@ -109,7 +109,7 @@ void* operator new[](_STLP_STD::size_t size, const _STLP_STD::nothrow_t&) noexce
   }
   catch ( const _STLP_STD::bad_alloc& ) {
     return 0;
-  } 
+  }
 }
 
 __attribute__ ((weak,visibility("default")))

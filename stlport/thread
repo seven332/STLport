@@ -579,8 +579,8 @@ using _STLP_STD::get_id;
 inline void yield()
 {
 #ifdef _STLP_PTHREADS
-  // sched_yield();
-  pthread_yield();
+  sched_yield();
+  // pthread_yield();
 #endif
 }
 

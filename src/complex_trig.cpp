@@ -39,9 +39,9 @@ _STLP_BEGIN_NAMESPACE
 
 #if !defined (_STLP_NO_LONG_DOUBLE)
 #  if defined (M_LN2l)
-  static const long double ldouble_limit = M_LN2l * LDBL_MAX_EXP;
+#    define ldouble_limit (M_LN2l * LDBL_MAX_EXP)
 #  else
-  static const long double ldouble_limit = ::log(LDBL_MAX);
+#    define ldouble_limit ::log(LDBL_MAX)
 #  endif
 #endif
 

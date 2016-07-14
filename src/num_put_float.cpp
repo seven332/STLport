@@ -137,7 +137,7 @@ static inline bool _Stl_is_inf(double x)        { return isinf(x); }
 static inline bool _Stl_is_neg_inf(double x)    { return isinf(x) && x < 0; }
 #  elif (defined (__unix) || defined (__unix__)) && \
          !defined (__APPLE__) && !defined (__DJGPP) && !defined(__osf__) && \
-         !defined (_CRAY)
+         !defined (_CRAY) && !defined (__ANDROID__)
 static inline bool _Stl_is_nan_or_inf(double x) { return IsNANorINF(x); }
 static inline bool _Stl_is_inf(double x)        { return IsNANorINF(x) && IsINF(x); }
 static inline bool _Stl_is_neg_inf(double x)    { return (IsINF(x)) && (x < 0.0); }
@@ -260,7 +260,8 @@ static inline char* _Stl_fcvtR(long double x, int n, int* pt, int* sign)
 { return _ldfcvt(*(long_double*)&x, n, pt, sign); }
 #    endif
 #    define _STLP_CVT_NEED_SYNCHRONIZATION
-#  elif defined (__unix) && !defined (__APPLE__) && !defined (_CRAY)
+#  elif defined (__unix) && !defined (__APPLE__) && !defined (_CRAY) && \
+        !defined (__ANDROID__)
 static inline char* _Stl_ecvtR(double x, int n, int* pt, int* sign, char* buf)
 { return ecvt_r(x, n, pt, sign, buf); }
 static inline char* _Stl_fcvtR(double x, int n, int* pt, int* sign, char* buf)
@@ -386,7 +387,7 @@ static void __fill_fmtbuf(char* fmtbuf, ios_base::fmtflags flags, char long_modi
 static char* _Stl_ecvtR(long double x, int n, int* pt, int* sign, char* buf) {
   // If long double value can be safely converted to double without losing precision
   // we use the ecvt function for double:
-  double y = __STATIC_CAST(double, x); 
+  double y = __STATIC_CAST(double, x);
   if (x == y)
     return _Stl_ecvtR(y, n, pt, sign, buf);
 
@@ -781,7 +782,7 @@ static size_t  __write_floatT(__iostring &buf, ios_base::fmtflags flags, int pre
   case ios_base::fixed:
     {
       /* Here, number of digits represents digits _after_ decimal point.
-       * In order to limit static buffer size we have to give 2 different values depending on x value. 
+       * In order to limit static buffer size we have to give 2 different values depending on x value.
        * For small values (abs(x) < 1) we need as many digits as requested by precision limited by the maximum number of digits
        * which is min_exponent10 + digits10 + 2
        * For bigger values we won't have more than limits::digits10 + 2 digits after decimal point. */

@@ -111,7 +111,7 @@
 /* __EDG_VERSION__ is an official EDG macro, compilers based
  * on EDG have to define it. */
 #if defined (__EDG_VERSION__)
-#  if (__EDG_VERSION__ >= 244) && !defined (_STLP_HAS_INCLUDE_NEXT)
+#  if (__EDG_VERSION__ >= 244) && !defined (_STLP_HAS_INCLUDE_NEXT) && !defined(__ANDROID__)
 #    define _STLP_HAS_INCLUDE_NEXT
 #  endif
 #  if !defined (__EXCEPTIONS) && !defined (_STLP_HAS_NO_EXCEPTIONS)
@@ -166,7 +166,7 @@
 #    define _STLP_BIG_ENDIAN 1
 #  elif defined (__i386) || defined (_M_IX86) || defined (_M_ARM) || \
         defined (__amd64__) || defined (_M_AMD64) || defined (__x86_64__) || \
-        defined (__alpha__)
+        defined (__alpha__) || defined (_MIPSEL)
 #    define _STLP_LITTLE_ENDIAN 1
 #  elif defined (__ia64__)
     /* itanium allows both settings (for instance via gcc -mbig-endian) - hence a seperate check is required */
@@ -309,7 +309,7 @@
 /* Some compiler support 0 size array so we use negative size array to generate
  * a compilation time error.
  */
-#  define _STLP_STATIC_ASSERT(expr) typedef char __static_assert[expr ? 1 : -1];
+#  define _STLP_STATIC_ASSERT(expr) typedef char __static_assert[expr ? 1 : -1]  __attribute__((unused));
 #endif
 
 /* apple mpw exception handling bug */

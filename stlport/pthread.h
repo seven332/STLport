@@ -39,6 +39,39 @@
 #  endif
 #endif
 
+#if defined(__ANDROID__)
+#ifndef _PTHREAD_BARRIER_
+#define _PTHREAD_BARRIER_
+
+typedef struct pthread_barrier_t {
+  /* FIXME implement */
+} pthread_barrier_t;
+
+typedef struct pthread_barrierattr_t {
+  /* FIXME implement */
+} pthread_barrierattr_t;
+
+#define PTHREAD_BARRIER_SERIAL_THREAD -1
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+int pthread_barrier_init (pthread_barrier_t*, const pthread_barrierattr_t*, unsigned);
+int pthread_barrier_destroy (pthread_barrier_t*);
+int pthread_barrier_wait (pthread_barrier_t*);
+int pthread_barrierattr_init (pthread_barrierattr_t*);
+int pthread_barrierattr_destroy (pthread_barrierattr_t*);
+int pthread_barrierattr_getpshared (const pthread_barrierattr_t*, int*);
+int pthread_barrierattr_setpshared (pthread_barrierattr_t*, int);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* _PTHREAD_BARRIER_ */
+#endif /* __ANDROID__ */
+
 /*
  Local Variables:
  mode:C++
