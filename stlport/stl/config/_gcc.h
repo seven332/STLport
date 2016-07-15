@@ -189,7 +189,7 @@ typedef unsigned int wint_t;
 
 /* strict ANSI prohibits "long long" ( gcc) */
 #if defined ( __STRICT_ANSI__ )
-#  undef _STLP_LONG_LONG 
+#  undef _STLP_LONG_LONG
 #endif
 
 #ifndef __EXCEPTIONS
@@ -246,4 +246,9 @@ typedef unsigned int wint_t;
 #  if (__GNUC__ < 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ <= 6))
 #    define _STLP_NO_ALIAS_TEMPLATES /* no alias templates yet */
 #  endif
+#endif
+
+#ifdef __ANDROID__
+#  undef _STLP_OPERATORS_NEW_DELETE
+#  undef _STLP_VENDOR_BAD_ALLOC
 #endif
