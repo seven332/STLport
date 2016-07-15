@@ -54,34 +54,8 @@ libstlport_c_includes := $(libstlport_path)/stlport
 # as a dependency, instead of two, especially when using the standalone
 # toolchain.
 #
-libgabi++_src_files := \
-        src/array_type_info.cc \
-        src/auxilary.cc \
-        src/class_type_info.cc \
-        src/cxxabi.cc \
-        src/cxxabi_vec.cc \
-        src/dwarf_helper.cc \
-        src/dynamic_cast.cc \
-        src/enum_type_info.cc \
-        src/exception.cc \
-        src/fatal_error.cc \
-        src/function_type_info.cc \
-        src/fundamental_type_info.cc \
-        src/helper_func_internal.cc \
-        src/one_time_construction.cc \
-        src/pbase_type_info.cc \
-        src/personality.cc \
-        src/pointer_type_info.cc \
-        src/pointer_to_member_type_info.cc \
-        src/call_unexpected.cc \
-        src/si_class_type_info.cc \
-        src/stdexcept.cc \
-        src/terminate.cc \
-        src/type_info.cc \
-        src/vmi_class_type_info.cc\
+include $(dir $(LOCAL_PATH))/gabi++/sources.mk
 
-libgabi++_src_files := $(libgabi++_src_files:%=../gabi++/%)
-libgabi++_c_includes := $(LOCAL_PATH)/../gabi++/include
 libstlport_c_includes += $(libgabi++_c_includes)
 
 include $(CLEAR_VARS)
